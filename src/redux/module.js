@@ -1,4 +1,4 @@
-import { getPosts, getUser } from "../api/apis";
+import { getPosts, getUser, setPosts } from "../api/apis";
 import { addBoard, addCard } from "../lib/utils";
 
 export const GET_POSTS = "GET_POSTS";
@@ -68,6 +68,8 @@ export const postsReducer = (state = initialState, action) => {
       const AllBoard = state.posts.data.AllBoard;
       const newBoard = addBoard();
       AllBoard.push(newBoard);
+      // console.log(AllBoard);
+      // console.log(state);
       return {
         ...state,
         posts: {
@@ -78,11 +80,11 @@ export const postsReducer = (state = initialState, action) => {
     case ADD_CARD: {
       const AllBoard = state.posts.data.AllBoard;
       const { boardId, title, uid, displayName, photoURL } = action.payload;
-      const selectedBoard = state.posts.data.AllBoard.find(
-        (board) => board.id === boardId
-      );
+      const selectedBoard = AllBoard.find((board) => board.id === boardId);
+      // console.log(AllBoard);
       const newCard = addCard(title, title, uid, displayName, photoURL);
       selectedBoard.cards.push(newCard);
+      console.log(AllBoard);
       return {
         ...state,
         posts: {
@@ -96,7 +98,7 @@ export const postsReducer = (state = initialState, action) => {
 };
 
 export const getLoginFn = (providerName) => async (dispatch) => {
-  // dispatch({ type: GET_USER });
+  dispatch({ type: GET_USER });
   try {
     const userInfo = await getUser(providerName);
     dispatch({ type: GET_USER_SUCCESS, payload: userInfo });
@@ -108,10 +110,10 @@ export const getLoginFn = (providerName) => async (dispatch) => {
 // 리듀서
 export const userReducer = (state = initialUserState, action) => {
   switch (action.type) {
-    // case GET_USER:
-    //   return {
-    //     ...state
-    //   }
+    case GET_USER:
+      return {
+        ...state,
+      };
     case GET_USER_SUCCESS:
       const user = action.payload.user;
       return {
@@ -124,6 +126,7 @@ export const userReducer = (state = initialUserState, action) => {
       console.log("failed!");
       return state;
     default:
+      // console.log("default");
       return state;
   }
 };

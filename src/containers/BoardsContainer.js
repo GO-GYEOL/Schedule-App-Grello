@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import Boards from "../components/Boards";
 import { getPostsFn } from "../redux/module";
@@ -13,11 +14,16 @@ const BoardsContainer = (props) => {
     dispatch(getPostsFn());
   }, []);
 
+  const onDragEnd = (props) => {
+    console.log(props)
+  }
   if (!data) return null;
   return (
     <div>
-      <AddBoardContainer />
-      <Boards posts={data} />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <AddBoardContainer />
+        <Boards data={data} />
+      </DragDropContext>
     </div>
   );
 };
