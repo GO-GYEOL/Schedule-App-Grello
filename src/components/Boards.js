@@ -24,10 +24,7 @@ const Boards = ({ data }) => {
                 >
                   <AddCardContainer boardId={board.id} />
                   <div>{board.title}</div>
-                  <Droppable
-                    droppableId={board.id}
-                    type="cards"
-                  >
+                  <Droppable droppableId={board.id} type="cards">
                     {(provided) => (
                       <div ref={provided.innerRef} {...provided.droppableProps}>
                         <Cards cards={board.cards} />

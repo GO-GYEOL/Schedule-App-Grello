@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import BoardsContainer from "../containers/BoardsContainer";
+import HeaderContainer from "../containers/HeaderContainer";
+import { getPostsFn } from "../redux/module";
 
 const HomePage = (props) => {
   // 로그인 없이 접근 시 로그인페이지로 강제이동
@@ -14,9 +16,16 @@ const HomePage = (props) => {
   //   }
   // }, []);
 
+  useEffect(() => {
+    dispatch(getPostsFn());
+  }, []);
+  const postsData = useSelector((state) => state.postsReducer.posts.data);
+  const userData = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
   return (
     <div>
-      <BoardsContainer />
+      <HeaderContainer data={userData} />
+      <BoardsContainer data={postsData} dispatch={dispatch} />
     </div>
   );
 };

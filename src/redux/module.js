@@ -9,6 +9,7 @@ export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const GET_USER_FAIL = "GET_USER_FAIL";
 export const ADD_BOARD = "ADD_BOARD";
 export const ADD_CARD = "ADD_CARD";
+export const ON_DRAG_END = "ON_DRAG_END";
 
 const initialState = {
   // posts: { loading: false, data: null, error: null },
@@ -33,7 +34,7 @@ export const getPostsFn = () => async (dispatch) => {
   }
 };
 
-// post 미들웨어
+// post 리듀서
 export const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_POSTS:
@@ -64,6 +65,28 @@ export const postsReducer = (state = initialState, action) => {
         },
       };
     }
+    case ON_DRAG_END: {
+      const { destination, source, type } = action.payload;
+      if (type === "boards") {
+        const [moved] = state.posts.data.AllBoard.splice(source.index, 1);
+        state.posts.data.AllBoard.splice(destination.index, 0, moved);
+        return state;
+        // 여기서는 왜 그냥 return state를 하면 정상적으로 리렌더링이 되는거지?? 얕은비교일텐데.
+      }
+      if (type === "cards") {
+        const boards = state.posts.data.AllBoard;
+        const sourceBoard = boards.find(
+          (board) => board.id === source.droppableId
+        );
+        const destineBoard = boards.find(
+          (board) => board.id === destination.droppableId
+        );
+        const moved = sourceBoard.cards[source.index];
+        sourceBoard.cards.splice(source.index, 1);
+        destineBoard.cards.splice(destination.index, 0, moved);
+        return state;
+      }
+    }
     case ADD_BOARD: {
       const AllBoard = state.posts.data.AllBoard;
       const newBoard = addBoard();
@@ -81,10 +104,8 @@ export const postsReducer = (state = initialState, action) => {
       const AllBoard = state.posts.data.AllBoard;
       const { boardId, title, uid, displayName, photoURL } = action.payload;
       const selectedBoard = AllBoard.find((board) => board.id === boardId);
-      // console.log(AllBoard);
-      const newCard = addCard(title, title, uid, displayName, photoURL);
+      const newCard = addCard(title, uid, displayName, photoURL);
       selectedBoard.cards.push(newCard);
-      console.log(AllBoard);
       return {
         ...state,
         posts: {
@@ -119,8 +140,10 @@ export const userReducer = (state = initialUserState, action) => {
       return {
         ...state,
         uid: user.uid,
-        photoURL: user.photoURL,
-        displayName: user.displayName,
+        photoURL: user.photoURL
+          ? user.photoURL
+          : "https://www.letsgoholiday.my/Content/Images/Icons/icon-guest.svg",
+        displayName: user.displayName ? user.displayName : "Guest",
       };
     case GET_USER_FAIL:
       console.log("failed!");
