@@ -12,6 +12,7 @@ import { db } from "../service/fbase";
 export const getPosts = async () => {
   const data = doc(db, "0828", "cards");
   const querySnapshot = await getDoc(data);
+  console.log(querySnapshot.data());
   return querySnapshot.data();
 };
 

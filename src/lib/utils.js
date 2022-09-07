@@ -5,10 +5,19 @@ export const addCard = (title, uid, displayName, photoURL) => ({
   uid,
   displayName,
   photoURL,
+  comments: [],
 });
 
 export const addBoard = () => ({
   cards: [],
   id: Date.now().toString(),
-  title: "new Board"
+  title: "new Board",
+});
+
+export const addComment = ({ uid, photoURL, displayName, body }) => ({
+  id: Date.now().toString(),
+  body: body,
+  photoURL: photoURL,
+  displayName: displayName,
+  uid: uid,
 });

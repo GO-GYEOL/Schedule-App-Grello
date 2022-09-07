@@ -1,7 +1,7 @@
 import React from "react";
 
-const Header = ({ data }) => {
-  const { uid, displayName, photoURL } = data;
+const Header = ({ userData }) => {
+  const { uid, displayName, photoURL } = userData;
   return (
     <div>
       <img src={photoURL} />

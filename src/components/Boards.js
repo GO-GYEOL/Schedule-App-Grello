@@ -23,11 +23,17 @@ const Boards = ({ data }) => {
                   key={board.id}
                 >
                   <AddCardContainer boardId={board.id} />
+                  {/* 수정해야한다. components가 container를 부르면 안된다. */}
+
                   <div>{board.title}</div>
                   <Droppable droppableId={board.id} type="cards">
                     {(provided) => (
                       <div ref={provided.innerRef} {...provided.droppableProps}>
-                        <Cards cards={board.cards} />
+                        <Cards
+                          cards={board.cards}
+                          boardId={board.id}
+                          boardIndex={index}
+                        />
                         {provided.placeholder}
                       </div>
                     )}

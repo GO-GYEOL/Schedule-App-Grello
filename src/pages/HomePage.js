@@ -24,7 +24,7 @@ const HomePage = (props) => {
   const dispatch = useDispatch();
   return (
     <div>
-      <HeaderContainer data={userData} />
+      <HeaderContainer userData={userData} />
       <BoardsContainer data={postsData} dispatch={dispatch} />
     </div>
   );

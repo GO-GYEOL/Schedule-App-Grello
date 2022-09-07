@@ -1,5 +1,5 @@
 import { getPosts, getUser, setPosts } from "../api/apis";
-import { addBoard, addCard } from "../lib/utils";
+import { addBoard, addCard, addComment } from "../lib/utils";
 
 export const GET_POSTS = "GET_POSTS";
 export const GET_POSTS_SUCCESS = "GET_POSTS_SUCCESS";
@@ -10,6 +10,8 @@ export const GET_USER_FAIL = "GET_USER_FAIL";
 export const ADD_BOARD = "ADD_BOARD";
 export const ADD_CARD = "ADD_CARD";
 export const ON_DRAG_END = "ON_DRAG_END";
+export const ADD_COMMENT = "ADD_COMMENT";
+export const SAVE_DESCRIPTION = "SAVE_DESCRIPTION"
 
 const initialState = {
   // posts: { loading: false, data: null, error: null },
@@ -110,6 +112,20 @@ export const postsReducer = (state = initialState, action) => {
         ...state,
         posts: {
           data: { AllBoard },
+          // AllBoard : AllBoard구나.
+        },
+      };
+    }
+    case ADD_COMMENT: {
+      const { boardIndex, cardIndex } = action.payload;
+      const AllBoard = state.posts.data.AllBoard;
+      const newComment = addComment(action.payload);
+      const card = state.posts.data.AllBoard[boardIndex].cards[cardIndex];
+      card.comments.push(newComment);
+      return {
+        ...state,
+        posts: {
+          data: { AllBoard : AllBoard },
         },
       };
     }
