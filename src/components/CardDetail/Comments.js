@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { ADD_COMMENT } from "../../redux/module";
-import { useSelector } from "react-redux";
+
 const Comments = ({ card, userData, cardIndex, boardIndex }) => {
   const inputRef = useRef();
   const dispatch = useDispatch();

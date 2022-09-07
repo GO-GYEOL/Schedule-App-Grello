@@ -13,8 +13,18 @@ const CardDetailContainer = (props) => {
   const card = postsData.AllBoard[boardIndex].cards[cardIndex];
   return (
     <div style={{ width: "600px", backgroundColor: "gray" }}>
-      <Title card={card} />
-      <Description card={card} />
+      <Title
+        card={card}
+        cardIndex={cardIndex}
+        boardIndex={boardIndex}
+        userData={userData}
+      />
+      <Description
+        card={card}
+        cardIndex={cardIndex}
+        boardIndex={boardIndex}
+        userData={userData}
+      />
       <Comments
         card={card}
         cardIndex={cardIndex}

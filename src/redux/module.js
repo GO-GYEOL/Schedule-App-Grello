@@ -11,7 +11,8 @@ export const ADD_BOARD = "ADD_BOARD";
 export const ADD_CARD = "ADD_CARD";
 export const ON_DRAG_END = "ON_DRAG_END";
 export const ADD_COMMENT = "ADD_COMMENT";
-export const SAVE_DESCRIPTION = "SAVE_DESCRIPTION"
+export const SAVE_DESCRIPTION = "SAVE_DESCRIPTION";
+export const SAVE_TITLE = "SAVE_TITLE";
 
 const initialState = {
   // posts: { loading: false, data: null, error: null },
@@ -117,15 +118,40 @@ export const postsReducer = (state = initialState, action) => {
       };
     }
     case ADD_COMMENT: {
-      const { boardIndex, cardIndex } = action.payload;
       const AllBoard = state.posts.data.AllBoard;
+      const { boardIndex, cardIndex } = action.payload;
       const newComment = addComment(action.payload);
       const card = state.posts.data.AllBoard[boardIndex].cards[cardIndex];
       card.comments.push(newComment);
       return {
         ...state,
         posts: {
-          data: { AllBoard : AllBoard },
+          data: { AllBoard: AllBoard },
+        },
+      };
+    }
+    case SAVE_DESCRIPTION: {
+      const AllBoard = state.posts.data.AllBoard;
+      const { boardIndex, cardIndex, body } = action.payload;
+      const card = state.posts.data.AllBoard[boardIndex].cards[cardIndex];
+      card.body = body;
+      console.log(AllBoard);
+      return {
+        ...state,
+        posts: {
+          data: { AllBoard: AllBoard },
+        },
+      };
+    }
+    case SAVE_TITLE: {
+      const AllBoard = state.posts.data.AllBoard;
+      const { boardIndex, cardIndex, title } = action.payload;
+      const card = state.posts.data.AllBoard[boardIndex].cards[cardIndex];
+      card.title = title;
+      return {
+        ...state,
+        posts: {
+          data: { AllBoard: AllBoard },
         },
       };
     }
