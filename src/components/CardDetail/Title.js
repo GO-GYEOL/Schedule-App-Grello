@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowMaximize } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { SAVE_TITLE } from "../../redux/module";
+import { SAVE_CARD_TITLE } from "../../redux/module";
 
 const Title = ({ card, cardIndex, boardIndex, userData }) => {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ const Title = ({ card, cardIndex, boardIndex, userData }) => {
   const onSubmit = (event) => {
     event.preventDefault();
     dispatch({
-      type: SAVE_TITLE,
+      type: SAVE_CARD_TITLE,
       payload: {
         title: inputRef.current.value,
         cardIndex,

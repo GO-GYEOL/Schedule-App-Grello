@@ -5,16 +5,16 @@ import Boards from "../components/Boards";
 import { getPostsFn, ON_DRAG_END } from "../redux/module";
 import AddBoardContainer from "./AddBoardContainer";
 
-const BoardsContainer = ({ data, dispatch }) => {
+const BoardsContainer = ({ postsData, dispatch }) => {
   const onDragEnd = (props) => {
     props.destination && dispatch({ type: ON_DRAG_END, payload: props });
   };
 
-  if (!data) return <div>hi</div>;
+  if (!postsData) return <div>hi</div>;
   return (
     <div>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Boards data={data} />
+        <Boards postsData={postsData} />
       </DragDropContext>
     </div>
   );

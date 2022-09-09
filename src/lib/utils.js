@@ -6,6 +6,8 @@ export const addCard = (title, uid, displayName, photoURL) => ({
   displayName,
   photoURL,
   comments: [],
+  cover: null,
+  color:null,
 });
 
 export const addBoard = () => ({

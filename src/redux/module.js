@@ -12,7 +12,8 @@ export const ADD_CARD = "ADD_CARD";
 export const ON_DRAG_END = "ON_DRAG_END";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const SAVE_DESCRIPTION = "SAVE_DESCRIPTION";
-export const SAVE_TITLE = "SAVE_TITLE";
+export const SAVE_CARD_TITLE = "SAVE_CARD_TITLE";
+export const SAVE_BOARD_TITLE = "SAVE_BOARD_TITLE";
 
 const initialState = {
   // posts: { loading: false, data: null, error: null },
@@ -143,11 +144,22 @@ export const postsReducer = (state = initialState, action) => {
         },
       };
     }
-    case SAVE_TITLE: {
+    case SAVE_CARD_TITLE: {
       const AllBoard = state.posts.data.AllBoard;
       const { boardIndex, cardIndex, title } = action.payload;
-      const card = state.posts.data.AllBoard[boardIndex].cards[cardIndex];
+      const card = AllBoard[boardIndex].cards[cardIndex];
       card.title = title;
+      return {
+        ...state,
+        posts: {
+          data: { AllBoard: AllBoard },
+        },
+      };
+    }
+    case SAVE_BOARD_TITLE: {
+      const AllBoard = state.posts.data.AllBoard;
+      const { boardIndex, title } = action.payload;
+      AllBoard[boardIndex].title = title;
       return {
         ...state,
         posts: {

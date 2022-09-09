@@ -5,6 +5,7 @@ import Comments from "../components/CardDetail/Comments";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import Cover from "../components/CardDetail/Cover";
 
 const CardDetailContainer = (props) => {
   const userData = useSelector((state) => state.userReducer);
@@ -13,6 +14,12 @@ const CardDetailContainer = (props) => {
   const card = postsData.AllBoard[boardIndex].cards[cardIndex];
   return (
     <div style={{ width: "600px", backgroundColor: "gray" }}>
+      <Cover
+        card={card}
+        cardIndex={cardIndex}
+        boardIndex={boardIndex}
+        userData={userData}
+      />
       <Title
         card={card}
         cardIndex={cardIndex}
