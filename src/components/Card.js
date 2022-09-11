@@ -1,7 +1,7 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useNavigate } from "react-router-dom";
-import Cover from "./CardDetail/Cover";
+import CardCover from "./CardCover";
 
 const Card = ({ card, cardIndex, boardIndex }) => {
   const navigate = useNavigate();
@@ -16,16 +16,15 @@ const Card = ({ card, cardIndex, boardIndex }) => {
   };
   return (
     <div>
-      <Draggable key={card.id} draggableId={card.id} index={cardIndex}>
+      <Draggable draggableId={card.id} index={cardIndex}>
         {(provided) => (
           <div
-            key={card.id}
             ref={provided.innerRef}
             {...provided.dragHandleProps}
             {...provided.draggableProps}
             onClick={() => onClick(card, cardIndex)}
           >
-            <Cover card={card}/>
+            <CardCover card={card} />
             <img src={card.photoURL} />
             <div>{card.displayName}</div>
             <div>{card.title}</div>

@@ -18,13 +18,12 @@ const Board = ({ board, boardIndex }) => {
     inputRef.current.blur();
   };
   return (
-    <Draggable key={board.id} draggableId={board.id} index={boardIndex}>
+    <Draggable draggableId={board.id} index={boardIndex}>
       {(provided) => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          key={board.id}
         >
           <AddCardContainer boardId={board.id} />
           {/* 수정해야한다. components가 container를 부르면 안된다. */}

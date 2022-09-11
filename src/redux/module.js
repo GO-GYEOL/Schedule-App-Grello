@@ -14,6 +14,8 @@ export const ADD_COMMENT = "ADD_COMMENT";
 export const SAVE_DESCRIPTION = "SAVE_DESCRIPTION";
 export const SAVE_CARD_TITLE = "SAVE_CARD_TITLE";
 export const SAVE_BOARD_TITLE = "SAVE_BOARD_TITLE";
+export const SAVE_COVER_URL = "SAVE_COVER_URL";
+export const SAVE_COVER_COLOR = "SAVE_COVER_COLOR";
 
 const initialState = {
   // posts: { loading: false, data: null, error: null },
@@ -160,6 +162,32 @@ export const postsReducer = (state = initialState, action) => {
       const AllBoard = state.posts.data.AllBoard;
       const { boardIndex, title } = action.payload;
       AllBoard[boardIndex].title = title;
+      return {
+        ...state,
+        posts: {
+          data: { AllBoard: AllBoard },
+        },
+      };
+    }
+    case SAVE_COVER_URL: {
+      const AllBoard = state.posts.data.AllBoard;
+      const { boardIndex, cardIndex, url } = action.payload;
+      const card = AllBoard[boardIndex].cards[cardIndex];
+      card.cover_url = url;
+      card.cover_color = null;
+      return {
+        ...state,
+        posts: {
+          data: { AllBoard: AllBoard },
+        },
+      };
+    }
+    case SAVE_COVER_COLOR: {
+      const AllBoard = state.posts.data.AllBoard;
+      const { boardIndex, cardIndex, color } = action.payload;
+      const card = AllBoard[boardIndex].cards[cardIndex];
+      card.cover_url = null;
+      card.cover_color = color;
       return {
         ...state,
         posts: {

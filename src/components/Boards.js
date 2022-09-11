@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Draggable, Droppable } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 import Board from "./BoardAndcards";
 
 const Boards = ({ postsData }) => {
