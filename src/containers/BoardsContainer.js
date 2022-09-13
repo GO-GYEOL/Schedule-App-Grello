@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import { useDispatch, useSelector } from "react-redux";
 import Boards from "../components/Boards";
-import { getPostsFn, ON_DRAG_END } from "../redux/module";
-import AddBoardContainer from "./AddBoardContainer";
+import { ON_DRAG_END } from "../redux/module";
 
 const BoardsContainer = ({ postsData, dispatch }) => {
   const onDragEnd = (props) => {

@@ -3,9 +3,9 @@ import styled from "styled-components";
 import PopUp from "./PopUp";
 
 const CoverBg = styled.div`
-  background-color: rgb(${(props) => props.color});
+  background-color: ${(props) => props.color};
   background-image: url(${(props) => (props.src ? props.src : null)});
-  background-size: cover;
+  /* background-size: cover; */
   background-position: center;
   width: 100%;
   height: ${(props) => (props.color || props.src ? "50px" : null)};

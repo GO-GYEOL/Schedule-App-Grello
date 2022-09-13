@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddCard from "../components/AddCard";
 import { ADD_CARD } from "../redux/module";
@@ -18,7 +18,19 @@ const AddCardContainer = ({ boardId }) => {
       },
     });
   };
-  return <AddCard onAddCard={onAddCard} />;
+  const [visible, setVisible] = useState(false);
+  const openAddCard = () => {
+    setVisible((prev) => !prev);
+  };
+  return (
+    <div>
+      {visible ? (
+        <AddCard onAddCard={onAddCard} />
+      ) : (
+        <div onClick={openAddCard}>Add a Card</div>
+      )}
+    </div>
+  );
 };
 
 export default AddCardContainer;

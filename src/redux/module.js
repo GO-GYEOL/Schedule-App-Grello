@@ -16,6 +16,7 @@ export const SAVE_CARD_TITLE = "SAVE_CARD_TITLE";
 export const SAVE_BOARD_TITLE = "SAVE_BOARD_TITLE";
 export const SAVE_COVER_URL = "SAVE_COVER_URL";
 export const SAVE_COVER_COLOR = "SAVE_COVER_COLOR";
+export const SAVE_BACKGROUND = "SAVE_BACKGROUND";
 
 const initialState = {
   // posts: { loading: false, data: null, error: null },
@@ -94,104 +95,123 @@ export const postsReducer = (state = initialState, action) => {
       }
     }
     case ADD_BOARD: {
-      const AllBoard = state.posts.data.AllBoard;
+      const data = state.posts.data;
       const newBoard = addBoard();
-      AllBoard.push(newBoard);
+      data.AllBoard.push(newBoard);
       // console.log(AllBoard);
       // console.log(state);
       return {
         ...state,
         posts: {
-          data: { AllBoard },
+          data: { ...data },
         },
       };
     }
     case ADD_CARD: {
-      const AllBoard = state.posts.data.AllBoard;
+      const data = state.posts.data;
+      // const AllBoard = state.posts.data.AllBoard;
       const { boardId, title, uid, displayName, photoURL } = action.payload;
-      const selectedBoard = AllBoard.find((board) => board.id === boardId);
+      const selectedBoard = data.AllBoard.find((board) => board.id === boardId);
       const newCard = addCard(title, uid, displayName, photoURL);
       selectedBoard.cards.push(newCard);
       return {
         ...state,
         posts: {
-          data: { AllBoard },
+          data: { ...data },
           // AllBoard : AllBoard구나.
         },
       };
     }
     case ADD_COMMENT: {
-      const AllBoard = state.posts.data.AllBoard;
+      const data = state.posts.data;
       const { boardIndex, cardIndex } = action.payload;
       const newComment = addComment(action.payload);
-      const card = state.posts.data.AllBoard[boardIndex].cards[cardIndex];
+      const card = data.AllBoard[boardIndex].cards[cardIndex];
       card.comments.push(newComment);
       return {
         ...state,
         posts: {
-          data: { AllBoard: AllBoard },
+          data: { ...data },
         },
       };
     }
     case SAVE_DESCRIPTION: {
-      const AllBoard = state.posts.data.AllBoard;
+      const data = state.posts.data;
       const { boardIndex, cardIndex, body } = action.payload;
-      const card = state.posts.data.AllBoard[boardIndex].cards[cardIndex];
+      const card = data.AllBoard[boardIndex].cards[cardIndex];
       card.body = body;
-      console.log(AllBoard);
       return {
         ...state,
         posts: {
-          data: { AllBoard: AllBoard },
+          data: { ...data },
         },
       };
     }
     case SAVE_CARD_TITLE: {
-      const AllBoard = state.posts.data.AllBoard;
+      const data = state.posts.data;
       const { boardIndex, cardIndex, title } = action.payload;
-      const card = AllBoard[boardIndex].cards[cardIndex];
+      const card = data.AllBoard[boardIndex].cards[cardIndex];
       card.title = title;
       return {
         ...state,
         posts: {
-          data: { AllBoard: AllBoard },
+          data: { ...data },
         },
       };
     }
     case SAVE_BOARD_TITLE: {
-      const AllBoard = state.posts.data.AllBoard;
+      const data = state.posts.data;
       const { boardIndex, title } = action.payload;
-      AllBoard[boardIndex].title = title;
+      data.AllBoard[boardIndex].title = title;
       return {
         ...state,
         posts: {
-          data: { AllBoard: AllBoard },
+          data: { ...data },
         },
       };
     }
     case SAVE_COVER_URL: {
-      const AllBoard = state.posts.data.AllBoard;
+      const data = state.posts.data;
       const { boardIndex, cardIndex, url } = action.payload;
-      const card = AllBoard[boardIndex].cards[cardIndex];
+      const card = data.AllBoard[boardIndex].cards[cardIndex];
       card.cover_url = url;
       card.cover_color = null;
       return {
         ...state,
         posts: {
-          data: { AllBoard: AllBoard },
+          data: { ...data },
         },
       };
     }
     case SAVE_COVER_COLOR: {
-      const AllBoard = state.posts.data.AllBoard;
+      const data = state.posts.data;
       const { boardIndex, cardIndex, color } = action.payload;
-      const card = AllBoard[boardIndex].cards[cardIndex];
+      const card = data.AllBoard[boardIndex].cards[cardIndex];
       card.cover_url = null;
       card.cover_color = color;
       return {
         ...state,
         posts: {
-          data: { AllBoard: AllBoard },
+          data: { ...data },
+        },
+      };
+    }
+    case SAVE_BACKGROUND: {
+      const data = state.posts.data;
+      console.log(data);
+      const { url, color } = action.payload;
+      console.log(url, color);
+      if (color) {
+        data.backgroundUrl = null;
+        data.backgroundColor = color;
+      }
+      if (url) {
+        data.backgroundUrl = url;
+      }
+      return {
+        ...state,
+        posts: {
+          data: { ...data },
         },
       };
     }
