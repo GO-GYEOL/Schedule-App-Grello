@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { DELETE_CARD } from "../redux/module";
 import CardCover from "./CardCover";
 
 const Card = ({ card, cardIndex, boardIndex }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [visible, setVisible] = useState(false);
+  const onDelete = (event) => {
+    event.preventDefault();
+    dispatch({ type: DELETE_CARD, payload: { boardIndex, cardIndex } });
+  };
   const onClick = (card, cardIndex) => {
     navigate(`/home/${card.id}`, {
       state: {
@@ -18,20 +26,30 @@ const Card = ({ card, cardIndex, boardIndex }) => {
   return (
     <Draggable draggableId={card.id} index={cardIndex}>
       {(provided) => (
-        <Wrapper
-          ref={provided.innerRef}
-          {...provided.dragHandleProps}
-          {...provided.draggableProps}
-          {...provided.draggableProps.style}
-          onClick={() => onClick(card, cardIndex)}
+        <div
+          onMouseOver={() => setVisible(true)}
+          onMouseOut={() => setVisible(false)}
         >
-          <CardCover card={card} />
-          <UserInfo>
-            <UserPhoto src={card.photoURL} />
-            <UserName>{card.displayName}</UserName>
-          </UserInfo>
-          <Title>{card.title}</Title>
-        </Wrapper>
+          {visible ? (
+            <DelBtn onClick={onDelete} src="/images/delete.svg"></DelBtn>
+          ) : null}
+          <Wrapper
+            ref={provided.innerRef}
+            {...provided.dragHandleProps}
+            {...provided.draggableProps}
+            {...provided.draggableProps.style}
+            onClick={() => onClick(card, cardIndex)}
+          >
+            <CardCover card={card} />
+            <CardInfo>
+              <>
+                <UserPhoto src={card.photoURL} />
+                <UserName>{card.displayName}</UserName>
+              </>
+            </CardInfo>
+            <Title>{card.title}</Title>
+          </Wrapper>
+        </div>
       )}
     </Draggable>
   );
@@ -43,11 +61,12 @@ const Wrapper = styled.div`
   width: 100%;
   background-color: white;
   border-radius: 5px;
-  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0.5px 0px 0.5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  margin-bottom:10px;
+  margin-bottom: 8px;
+  padding-bottom: 5px;
 `;
-const UserInfo = styled.div`
+const CardInfo = styled.div`
   display: flex;
   justify-content: end;
 `;
@@ -63,4 +82,18 @@ const UserName = styled.div`
 const Title = styled.div`
   font-size: 15px;
   text-align: center;
+`;
+const DelBtn = styled.img`
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  position: absolute;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0.8;
+  margin: 3px 0px 0px 3px;
+  &:hover {
+    background-color: #e0e7ec;
+  }
 `;

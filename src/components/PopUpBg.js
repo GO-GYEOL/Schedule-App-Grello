@@ -15,44 +15,46 @@ const PopUpBg = ({ onBgChange }) => {
   };
 
   return (
-    <Wrapper>
-      <div style={{ display: "flex" }}>
-        <div onClick={onPhotoVisible} style={{ cursor: "pointer" }}>
-          photos
+    <div>
+      <Wrapper>
+        <div style={{ display: "flex" }}>
+          <div onClick={onPhotoVisible} style={{ cursor: "pointer" }}>
+            photos
+          </div>
+          <div onClick={onColorVisible} style={{ cursor: "pointer" }}>
+            color
+          </div>
         </div>
-        <div onClick={onColorVisible} style={{ cursor: "pointer" }}>
-          color
+
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {photoVisible
+            ? backgroundImages.map((image) => (
+                <CoverImage
+                  key={image}
+                  url={image}
+                  onClick={() => onBgChange({ url: image })}
+                ></CoverImage>
+              ))
+            : null}
         </div>
-      </div>
 
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {photoVisible
-          ? backgroundImages.map((image) => (
-              <CoverImage
-                url={image}
-                onClick={() => onBgChange({ url: image })}
-              ></CoverImage>
-            ))
-          : null}
-      </div>
-
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {colorVisible
-          ? colors.map((color) => (
-              <ColorButton
-                rgb={color.rgb}
-                onClick={() => onBgChange({ color: color.rgb })}
-              ></ColorButton>
-            ))
-          : null}
-      </div>
-    </Wrapper>
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {colorVisible
+            ? colors.map((color) => (
+                <ColorButton
+                  key={color.rgb}
+                  rgb={color.rgb}
+                  onClick={() => onBgChange({ color: color.rgb })}
+                ></ColorButton>
+              ))
+            : null}
+        </div>
+      </Wrapper>
+    </div>
   );
 };
 
 export default PopUpBg;
-
-
 
 const Wrapper = styled.div`
   width: 300px;

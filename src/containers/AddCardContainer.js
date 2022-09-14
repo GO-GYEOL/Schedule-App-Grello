@@ -18,19 +18,7 @@ const AddCardContainer = ({ boardId }) => {
       },
     });
   };
-  const [visible, setVisible] = useState(false);
-  const openAddCard = () => {
-    setVisible((prev) => !prev);
-  };
-  return (
-    <div>
-      {visible ? (
-        <AddCard onAddCard={onAddCard} />
-      ) : (
-        <div onClick={openAddCard}>Add a Card</div>
-      )}
-    </div>
-  );
+  return <AddCard onAddCard={onAddCard} />;
 };
 
 export default AddCardContainer;

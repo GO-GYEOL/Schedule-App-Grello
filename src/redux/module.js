@@ -17,6 +17,8 @@ export const SAVE_BOARD_TITLE = "SAVE_BOARD_TITLE";
 export const SAVE_COVER_URL = "SAVE_COVER_URL";
 export const SAVE_COVER_COLOR = "SAVE_COVER_COLOR";
 export const SAVE_BACKGROUND = "SAVE_BACKGROUND";
+export const DELETE_BOARD = "DELETE_BOARD";
+export const DELETE_CARD = "DELETE_CARD";
 
 const initialState = {
   // posts: { loading: false, data: null, error: null },
@@ -198,16 +200,34 @@ export const postsReducer = (state = initialState, action) => {
     }
     case SAVE_BACKGROUND: {
       const data = state.posts.data;
-      console.log(data);
       const { url, color } = action.payload;
-      console.log(url, color);
-      if (color) {
-        data.backgroundUrl = null;
-        data.backgroundColor = color;
-      }
-      if (url) {
-        data.backgroundUrl = url;
-      }
+      data.backgroundUrl = null;
+      data.backgroundColor = null;
+      if (color) data.backgroundColor = color;
+      if (url) data.backgroundUrl = url;
+      return {
+        ...state,
+        posts: {
+          data: { ...data },
+        },
+      };
+    }
+    case DELETE_BOARD: {
+      const data = state.posts.data;
+      const { boardIndex } = action.payload;
+      data.AllBoard.splice(boardIndex, 1);
+      return {
+        ...state,
+        posts: {
+          data: { ...data },
+        },
+      };
+    }
+    case DELETE_CARD: {
+      const data = state.posts.data;
+      const { boardIndex, cardIndex } = action.payload;
+      console.log(action.payload);
+      data.AllBoard[boardIndex].cards.splice(cardIndex, 1);
       return {
         ...state,
         posts: {

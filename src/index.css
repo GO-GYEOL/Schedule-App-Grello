@@ -82,6 +82,7 @@ time,
 mark,
 audio,
 input,
+textarea,
 video {
   margin: 0;
   padding: 0;
@@ -146,4 +147,10 @@ body {
 a {
   text-decoration: none;
   color: inherit;
+}
+button,
+input,
+textarea {
+  border: none;
+  outline:none;
 }

@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Cover from "../components/CardDetail/Cover";
+import styled from "styled-components";
 
 const CardDetailContainer = (props) => {
   const userData = useSelector((state) => state.userReducer);
@@ -13,7 +14,7 @@ const CardDetailContainer = (props) => {
   const { cardIndex, boardIndex } = useLocation().state;
   const card = postsData.AllBoard[boardIndex].cards[cardIndex];
   return (
-    <div style={{ width: "600px", backgroundColor: "gray" }}>
+    <Wrapper style={{ width: "600px" }}>
       <Cover
         card={card}
         cardIndex={cardIndex}
@@ -38,8 +39,12 @@ const CardDetailContainer = (props) => {
         boardIndex={boardIndex}
         userData={userData}
       />
-    </div>
+    </Wrapper>
   );
 };
 
 export default CardDetailContainer;
+
+const Wrapper = styled.div`
+  padding: 20px;
+`;

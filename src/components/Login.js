@@ -10,15 +10,15 @@ const LogIn = ({ onLogin }) => {
       <LoginBox>
         <Title>Schedules</Title>
         <LoginBtn onClick={() => onClick("Google")}>
-          <Image src="./images/google.svg"></Image>
+          <Image src="/images/google.svg"></Image>
           Continue with Google
         </LoginBtn>
         <LoginBtn onClick={() => onClick("Github")}>
-          <Image src="./images/github.svg"></Image>
+          <Image src="/images/github.svg"></Image>
           Continue with Github
         </LoginBtn>
         <LoginBtn onClick={() => onClick("Anonymous")}>
-          <Image src="./images/user.svg"></Image>
+          <Image src="/images/user.svg"></Image>
           Continue with Guest
         </LoginBtn>
       </LoginBox>
@@ -68,7 +68,7 @@ const Image = styled.img`
 const Background = styled.div`
   width: 90%;
   height: 80%;
-  background-image: url("./images/subway.jpg");
+  background-image: url("/images/subway.jpg");
   background-size: contain;
   background-position: center;
   position: absolute;

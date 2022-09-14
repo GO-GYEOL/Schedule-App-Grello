@@ -3,16 +3,22 @@ import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import AddCardContainer from "../containers/AddCardContainer";
-import { SAVE_BOARD_TITLE } from "../redux/module";
+import { DELETE_BOARD, SAVE_BOARD_TITLE } from "../redux/module";
 import Card from "./Card";
 
 const Board = ({ board, boardIndex }) => {
   const [visible, setVisible] = useState(true);
   const inputRef = useRef();
   const dispatch = useDispatch();
+  const onDelete = (event) => {
+    event.preventDefault();
+    dispatch({
+      type: DELETE_BOARD,
+      payload: { boardIndex: boardIndex },
+    });
+  };
   const onSaveBoardTitle = (event) => {
     event.preventDefault();
-    console.log("complete");
     setVisible(true);
     dispatch({
       type: SAVE_BOARD_TITLE,
@@ -30,15 +36,23 @@ const Board = ({ board, boardIndex }) => {
         >
           <form onSubmit={onSaveBoardTitle}>
             {visible ? (
-              <Title
-                onClick={() => {
-                  setVisible(false);
-                }}
-              >
+              <Title onClick={() => setVisible(false)}>
                 {board.title}
+                <DelBtn
+                  src="/images/dots.svg"
+                  boardIndex={boardIndex}
+                  onClick={onDelete}
+                />
               </Title>
             ) : (
-              <TitleInput ref={inputRef} defaultValue={board.title} autoFocus />
+              <>
+                <Overlay onClick={onSaveBoardTitle} />
+                <TitleInput
+                  ref={inputRef}
+                  defaultValue={board.title}
+                  autoFocus
+                />
+              </>
             )}
           </form>
           <Droppable droppableId={board.id} type="cards">
@@ -83,6 +97,7 @@ const TitleInput = styled.input`
   font-weight: 600;
   background-color: inherit;
   outline: 2px solid #2196f3;
+  position: relative;
 `;
 
 const Title = styled.div`
@@ -91,4 +106,24 @@ const Title = styled.div`
   margin-bottom: 10px;
   padding: 5px;
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Overlay = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
+const DelBtn = styled.img`
+  width: 20px;
+  height: 20px;
+  padding: 1px;
+  border-radius: 5px;
+  &:hover {
+    background-color: rgba(200, 200, 200, 0.5);
+  }
 `;
