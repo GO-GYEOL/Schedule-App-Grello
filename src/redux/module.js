@@ -19,6 +19,7 @@ export const SAVE_COVER_COLOR = "SAVE_COVER_COLOR";
 export const SAVE_BACKGROUND = "SAVE_BACKGROUND";
 export const DELETE_BOARD = "DELETE_BOARD";
 export const DELETE_CARD = "DELETE_CARD";
+export const DELETE_COMMENT= "DELETE_COMMENT";
 
 const initialState = {
   // posts: { loading: false, data: null, error: null },
@@ -33,10 +34,10 @@ const initialUserState = {
 };
 
 // 미들웨어Fn
-export const getPostsFn = () => async (dispatch) => {
+export const getPostsFn = (roomId) => async (dispatch) => {
   // dispatch({ type: GET_POSTS });
   try {
-    const payload = await getPosts();
+    const payload = await getPosts(roomId);
     dispatch({ type: GET_POSTS_SUCCESS, payload });
   } catch (e) {
     dispatch({ type: GET_POSTS_FAIL, payload: e });
@@ -228,6 +229,17 @@ export const postsReducer = (state = initialState, action) => {
       const { boardIndex, cardIndex } = action.payload;
       console.log(action.payload);
       data.AllBoard[boardIndex].cards.splice(cardIndex, 1);
+      return {
+        ...state,
+        posts: {
+          data: { ...data },
+        },
+      };
+    }
+    case DELETE_COMMENT: {
+      const data = state.posts.data;
+      const { boardIndex, cardIndex, commentIndex } = action.payload;
+      data.AllBoard[boardIndex].cards[cardIndex].comments.splice(commentIndex, 1);
       return {
         ...state,
         posts: {

@@ -28,17 +28,19 @@ const Title = ({ card, cardIndex, boardIndex, userData }) => {
   };
   return (
     <Wrapper>
-      <Img src="/images/title.svg" />
-      <form onSubmit={onSubmit} style={{ width: "100%" }}>
-        {visible ? (
-          <TitleDiv onClick={showTitle}>{card.title}</TitleDiv>
-        ) : (
-          <>
-            <Overlay onClick={onSubmit} />
-            <TitleInput ref={inputRef} defaultValue={card.title} />
-          </>
-        )}
-      </form>
+      <Header>
+        <IconImg src="/images/title.svg" />
+        <Form onSubmit={onSubmit} style={{ width: "100%" }}>
+          {visible ? (
+            <TitleDiv onClick={showTitle}>{card.title}</TitleDiv>
+          ) : (
+            <>
+              <Overlay onClick={onSubmit} />
+              <TitleInput ref={inputRef} defaultValue={card.title} />
+            </>
+          )}
+        </Form>
+      </Header>
     </Wrapper>
   );
 };
@@ -49,13 +51,13 @@ const Wrapper = styled.div`
   display: flex;
   width: 100%;
 `;
-
-const Img = styled.img`
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
+const Header = styled.div`
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px;
+  font-weight: 400;
+  line-height: 30px;
 `;
-
 const Overlay = styled.div`
   width: 100%;
   height: 100%;
@@ -64,19 +66,27 @@ const Overlay = styled.div`
   top: 0;
   left: 0;
 `;
-
-const TitleInput = styled.input`
-  width: 100%;
-  border: none;
-  padding: 5px;
-  font-weight: 600;
-  background-color: inherit;
-  outline: 2px solid #2196f3;
-  position: relative;
-`;
 const TitleDiv = styled.div`
   width: 100%;
   cursor: pointer;
-  padding: 5px;
-  font-weight: bold;
+  font-size: 18px;
+`;
+const TitleInput = styled.input`
+  width: 100%;
+  border: none;
+  background-color: inherit;
+  outline: 2px solid #2196f3;
+  font-size: 18px;
+  position: relative;
+`;
+
+const IconImg = styled.img`
+  width: 30px;
+  height: 30px;
+  border-radius: ${(props) => (props.radius ? props.radius : "none")};
+  margin-right: 10px;
+`;
+
+const Form = styled.form`
+  display: flex;
 `;

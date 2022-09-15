@@ -10,7 +10,7 @@ const LoginPage = (props) => {
   useEffect(() => {
     if (isLoggedIn.uid) {
       console.log(isLoggedIn);
-      navigate("/home");
+      navigate("/room");
     }
   });
 

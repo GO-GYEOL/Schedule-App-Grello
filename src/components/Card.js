@@ -12,10 +12,12 @@ const Card = ({ card, cardIndex, boardIndex }) => {
   const [visible, setVisible] = useState(false);
   const onDelete = (event) => {
     event.preventDefault();
-    dispatch({ type: DELETE_CARD, payload: { boardIndex, cardIndex } });
+    const result = window.confirm("해당 카드를 삭제할까요?");
+    result &&
+      dispatch({ type: DELETE_CARD, payload: { boardIndex, cardIndex } });
   };
   const onClick = (card, cardIndex) => {
-    navigate(`/home/${card.id}`, {
+    navigate(`${card.id}`, {
       state: {
         cardIndex,
         card: card,

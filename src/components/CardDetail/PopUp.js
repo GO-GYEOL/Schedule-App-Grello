@@ -4,50 +4,6 @@ import styled from "styled-components";
 import { colors, coverImages } from "../../lib/utils";
 import { SAVE_COVER_COLOR, SAVE_COVER_URL } from "../../redux/module";
 
-const Wrapper = styled.div`
-  width: 300px;
-  /* height: 250px; */
-  background-color: whitesmoke;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  padding: 10px;
-  box-sizing: border-box;
-`;
-const ColorButton = styled.div`
-  width: 50px;
-  height: 35px;
-  border-radius: 2.5px;
-  margin: 1.5px 3px;
-  box-sizing: border-box;
-  background-color: ${(props) => props.rgb};
-  border: ${(props) => (props.rgb ? props.rgb : "1px dashed black")};
-  flex: 1 1 17%;
-  z-index: 1;
-  cursor: pointer;
-  &:hover {
-    filter: brightness(0.8);
-  }
-`;
-const CoverImage = styled.div`
-  width: 70px;
-  height: 40px;
-  border-radius: 2.5px;
-  margin: 1.5px 3px;
-  box-sizing: border-box;
-  background-image: url(${(props) => props.url});
-  background-size: cover;
-  background-position: center;
-  flex: 1 1 30%;
-  z-index: 1;
-  cursor: pointer;
-  &:hover {
-    filter: brightness(0.8);
-  }
-`;
-
 const PopUp = ({ card, cardIndex, boardIndex }) => {
   const dispatch = useDispatch();
   const inputRef = useRef();
@@ -111,3 +67,47 @@ const PopUp = ({ card, cardIndex, boardIndex }) => {
 };
 
 export default PopUp;
+
+const Wrapper = styled.div`
+  width: 300px;
+  /* height: 250px; */
+  background-color: whitesmoke;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  padding: 10px;
+  box-sizing: border-box;
+`;
+const ColorButton = styled.div`
+  width: 50px;
+  height: 35px;
+  border-radius: 2.5px;
+  margin: 1.5px 3px;
+  box-sizing: border-box;
+  background-color: ${(props) => props.rgb};
+  border: ${(props) => (props.rgb ? props.rgb : "1px dashed black")};
+  flex: 1 1 17%;
+  z-index: 1;
+  cursor: pointer;
+  &:hover {
+    filter: brightness(0.8);
+  }
+`;
+const CoverImage = styled.div`
+  width: 70px;
+  height: 40px;
+  border-radius: 2.5px;
+  margin: 1.5px 3px;
+  box-sizing: border-box;
+  background-image: url(${(props) => props.url});
+  background-size: cover;
+  background-position: center;
+  flex: 1 1 30%;
+  z-index: 1;
+  cursor: pointer;
+  &:hover {
+    filter: brightness(0.8);
+  }
+`;

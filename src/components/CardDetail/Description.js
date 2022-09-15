@@ -24,7 +24,7 @@ const Description = ({ card, cardIndex, boardIndex, userData }) => {
         <Span>Description</Span>
       </Header>
       <Wrapper>
-        <TextArea ref={textRef} defaultValue={card.body}/>
+        <TextArea ref={textRef} defaultValue={card.body} spellCheck={false} />
         <Button bgColor="#0079be" color="white" onClick={onSave}>
           Save
         </Button>
@@ -39,16 +39,19 @@ const Description = ({ card, cardIndex, boardIndex, userData }) => {
 export default Description;
 
 const Wrapper = styled.div`
-  margin-left: 40px;
+  /* margin-left: 40px; */
 `;
 const TextArea = styled.textarea`
   width: 100%;
-  height: 50px;
+  height: 60px;
   padding: 10px;
   background-color: #ebecef;
   resize: none;
+  margin-bottom: 5px;
   &:focus {
+    height: 100px;
     outline: 3px solid #2196f3;
+    transition: 0.1s;
   }
 `;
 const Button = styled.button`
@@ -60,6 +63,7 @@ const Button = styled.button`
 `;
 const Header = styled.div`
   display: flex;
+  margin-top: 10px;
   margin-bottom: 10px;
   font-weight: 400;
   line-height: 30px;

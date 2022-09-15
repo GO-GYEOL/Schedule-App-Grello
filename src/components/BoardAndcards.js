@@ -12,10 +12,12 @@ const Board = ({ board, boardIndex }) => {
   const dispatch = useDispatch();
   const onDelete = (event) => {
     event.preventDefault();
-    dispatch({
-      type: DELETE_BOARD,
-      payload: { boardIndex: boardIndex },
-    });
+    const result = window.confirm("보드를 삭제할까요?");
+    result &&
+      dispatch({
+        type: DELETE_BOARD,
+        payload: { boardIndex: boardIndex },
+      });
   };
   const onSaveBoardTitle = (event) => {
     event.preventDefault();

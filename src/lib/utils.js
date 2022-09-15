@@ -1,3 +1,5 @@
+import swal from "sweetalert";
+
 export const addCard = (title, uid, displayName, photoURL) => ({
   id: Date.now().toString(),
   title,
@@ -56,3 +58,11 @@ export const coverImages = [
   "https://cdn.pixabay.com/photo/2022/06/29/17/47/coffee-7292250_960_720.jpg",
   "https://cdn.pixabay.com/photo/2022/08/31/11/01/kangaroo-7423042_960_720.jpg",
 ];
+
+export const warning = () =>
+  swal("한번 삭제하면 복구할 수 없어요. 삭제할까요?", {
+    buttons: {
+      No: true,
+      Yes: true,
+    },
+  });

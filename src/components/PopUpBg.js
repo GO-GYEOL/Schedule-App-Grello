@@ -18,12 +18,14 @@ const PopUpBg = ({ onBgChange }) => {
     <div>
       <Wrapper>
         <div style={{ display: "flex" }}>
-          <div onClick={onPhotoVisible} style={{ cursor: "pointer" }}>
-            photos
-          </div>
-          <div onClick={onColorVisible} style={{ cursor: "pointer" }}>
-            color
-          </div>
+          <ButtonWrapper onClick={onPhotoVisible}>
+            <ClickImg src="https://images.wallpaperscraft.com/image/single/house_building_architecture_369556_1280x720.jpg" />
+            <div>photos</div>
+          </ButtonWrapper>
+          <ButtonWrapper onClick={onColorVisible}>
+            <ClickImg src="/images/colors.jpg" />
+            <div>color</div>
+          </ButtonWrapper>
         </div>
 
         <div style={{ display: "flex", flexWrap: "wrap" }}>
@@ -57,7 +59,7 @@ const PopUpBg = ({ onBgChange }) => {
 export default PopUpBg;
 
 const Wrapper = styled.div`
-  width: 300px;
+  width: 360px;
   height: 100%;
   background-color: white;
   position: absolute;
@@ -95,4 +97,18 @@ const CoverImage = styled.div`
   &:hover {
     filter: brightness(0.8);
   }
+`;
+
+const ClickImg = styled.img`
+  width: 170px;
+  height: 100px;
+  border-radius: 10px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  padding: 5px;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
 `;

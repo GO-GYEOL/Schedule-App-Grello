@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faList } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { ADD_COMMENT } from "../../redux/module";
+import { ADD_COMMENT, DELETE_COMMENT } from "../../redux/module";
 import styled from "styled-components";
+import swal from "sweetalert";
+import * as utils from "../../lib/utils";
 
 const Comments = ({ card, userData, cardIndex, boardIndex }) => {
   const inputRef = useRef();
@@ -23,6 +23,26 @@ const Comments = ({ card, userData, cardIndex, boardIndex }) => {
     });
     inputRef.current.value = "";
   };
+  const onDelete = (event, commentIndex) => {
+    event.preventDefault();
+    utils.warning().then((value) => {
+      switch (value) {
+        case "Yes":
+          dispatch({
+            type: DELETE_COMMENT,
+            payload: {
+              boardIndex,
+              cardIndex,
+              commentIndex,
+            },
+          });
+          swal("삭제완료!");
+          break;
+        default:
+          break;
+      }
+    });
+  };
 
   return (
     <Wrapper>
@@ -32,15 +52,20 @@ const Comments = ({ card, userData, cardIndex, boardIndex }) => {
       </Header>
       <Form onSubmit={onSubmit}>
         <Img src={userData.photoURL} />
-        <Input placeholder="댓글을 입력하세요" ref={inputRef} />
+        <InputWrapper>
+          <Input placeholder="댓글을 입력하세요" ref={inputRef} />
+          <Button>Submit</Button>
+        </InputWrapper>
       </Form>
       <div>
-        {card.comments.map((comment) => (
+        {card.comments.map((comment, index) => (
           <List key={comment.id}>
             <Img src={comment.photoURL} />
             <UserInfo>
               <Name>{comment.displayName}</Name>
-              <Comment>{comment.body}</Comment>
+              <Comment onClick={(event) => onDelete(event, index)}>
+                {comment.body}
+              </Comment>
             </UserInfo>
           </List>
         ))}
@@ -51,7 +76,7 @@ const Comments = ({ card, userData, cardIndex, boardIndex }) => {
 
 export default Comments;
 const Wrapper = styled.div`
-  margin-top: 40px;
+  margin-top: 30px;
 `;
 const Header = styled.div`
   display: flex;
@@ -77,14 +102,36 @@ const Span = styled.span`
 const Form = styled.form`
   display: flex;
 `;
+const InputWrapper = styled.div`
+  width: 100%;
+  margin-left: 15px;
+  background-color: #ebecef;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+`;
 const Input = styled.input`
   width: 100%;
   height: 30px;
   padding: 7px;
   border-radius: 3px;
-  margin-left: 10px;
-  margin-bottom: 10px;
   font-size: 12px;
+  transition: 0.1s;
+  margin-bottom: 5px;
+  &:focus {
+    width: 100%;
+    /* height: 40px; */
+    outline: 2px solid #2196f3;
+  }
+`;
+const Button = styled.button`
+  background-color: #0079be;
+  color: white;
+  font-size: 10px;
+  padding: 8px;
+  border-radius: 3px;
 `;
 const List = styled.div`
   display: flex;
@@ -92,7 +139,6 @@ const List = styled.div`
 `;
 const UserInfo = styled.div`
   flex-direction: column;
-  width: 100%;
   margin-left: 15px;
 `;
 const Name = styled.div`
@@ -100,12 +146,13 @@ const Name = styled.div`
   margin-bottom: 3px;
 `;
 const Comment = styled.div`
-  width: 100%;
   height: 25px;
   padding: 7px;
   border-radius: 3px;
-  background-color: white;
+  background-color: #ebecef;
   font-size: 12px;
-  box-shadow: 0px 0.2px 1.5px 0px rgba(0, 0, 0, 0.6);
   margin-bottom: 5px;
+  &:hover {
+    background-color: rgba(200, 200, 200, 0.5);
+  }
 `;
