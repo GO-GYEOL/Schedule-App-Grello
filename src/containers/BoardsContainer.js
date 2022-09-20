@@ -1,5 +1,6 @@
 import React from "react";
 import { DragDropContext } from "react-beautiful-dnd";
+import styled from "styled-components";
 import Boards from "../components/Boards";
 import { ON_DRAG_END } from "../redux/module";
 
@@ -10,11 +11,9 @@ const BoardsContainer = ({ postsData, dispatch }) => {
 
   if (!postsData) return <div>hi</div>;
   return (
-    <div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Boards postsData={postsData} />
-      </DragDropContext>
-    </div>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Boards postsData={postsData} />
+    </DragDropContext>
   );
 };
 

@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { DELETE_CARD } from "../redux/module";
 import CardCover from "./CardCover";
+import * as utils from "../lib/utils";
+import swal from "sweetalert";
 
 const Card = ({ card, cardIndex, boardIndex }) => {
   const navigate = useNavigate();
@@ -12,9 +14,18 @@ const Card = ({ card, cardIndex, boardIndex }) => {
   const [visible, setVisible] = useState(false);
   const onDelete = (event) => {
     event.preventDefault();
-    const result = window.confirm("해당 카드를 삭제할까요?");
-    result &&
-      dispatch({ type: DELETE_CARD, payload: { boardIndex, cardIndex } });
+    utils.warning().then((value) => {
+      switch (value) {
+        case "Yes":
+          dispatch({
+            type: DELETE_CARD,
+            payload: { boardIndex, cardIndex },
+          });
+          swal("삭제완료!");
+        default:
+          break;
+      }
+    });
   };
   const onClick = (card, cardIndex) => {
     navigate(`${card.id}`, {

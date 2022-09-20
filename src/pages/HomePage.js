@@ -46,9 +46,11 @@ const HomePage = (props) => {
       bgc={postsData ? postsData.backgroundColor : null}
       url={postsData ? postsData.backgroundUrl : null}
     >
-      <HeaderContainer userData={userData} />
-      <BoardsContainer postsData={postsData} dispatch={dispatch} />
-      <Outlet />
+      <div style={{height:"100%"}}>
+        <HeaderContainer userData={userData} />
+        <BoardsContainer postsData={postsData} dispatch={dispatch} />
+        <Outlet />
+      </div>
     </Wrapper>
   );
 };

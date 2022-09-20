@@ -15,15 +15,22 @@ const ChangeBackground = (props) => {
   };
 
   return (
-    <div>
+    <>
       <ChangeBgBtn onClick={onClick}>Change Background</ChangeBgBtn>
       {visible ? (
-        <>
+        <div
+          style={{
+            width: "100vw",
+            height: "100vh",
+            position: "absolute",
+            top: "0",
+          }}
+        >
           <Overlay onClick={onClick} />
           <PopUpBg onBgChange={onBgChange} />
-        </>
+        </div>
       ) : null}
-    </div>
+    </>
   );
 };
 
@@ -41,7 +48,5 @@ const ChangeBgBtn = styled.button`
 const Overlay = styled.div`
   width: 100%;
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
 `;

@@ -5,6 +5,8 @@ import styled from "styled-components";
 import AddCardContainer from "../containers/AddCardContainer";
 import { DELETE_BOARD, SAVE_BOARD_TITLE } from "../redux/module";
 import Card from "./Card";
+import * as utils from "../lib/utils";
+import swal from "sweetalert";
 
 const Board = ({ board, boardIndex }) => {
   const [visible, setVisible] = useState(true);
@@ -12,12 +14,18 @@ const Board = ({ board, boardIndex }) => {
   const dispatch = useDispatch();
   const onDelete = (event) => {
     event.preventDefault();
-    const result = window.confirm("보드를 삭제할까요?");
-    result &&
-      dispatch({
-        type: DELETE_BOARD,
-        payload: { boardIndex: boardIndex },
-      });
+    utils.warning().then((value) => {
+      switch (value) {
+        case "Yes":
+          dispatch({
+            type: DELETE_BOARD,
+            payload: { boardIndex: boardIndex },
+          });
+          swal("삭제완료!");
+        default:
+          break;
+      }
+    });
   };
   const onSaveBoardTitle = (event) => {
     event.preventDefault();
@@ -31,50 +39,53 @@ const Board = ({ board, boardIndex }) => {
   return (
     <Draggable draggableId={board.id} index={boardIndex}>
       {(provided) => (
-        <Wrapper
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <form onSubmit={onSaveBoardTitle}>
-            {visible ? (
-              <Title onClick={() => setVisible(false)}>
-                {board.title}
-                <DelBtn
-                  src="/images/dots.svg"
-                  boardIndex={boardIndex}
-                  onClick={onDelete}
-                />
-              </Title>
-            ) : (
-              <>
-                <Overlay onClick={onSaveBoardTitle} />
-                <TitleInput
-                  ref={inputRef}
-                  defaultValue={board.title}
-                  autoFocus
-                />
-              </>
-            )}
-          </form>
-          <Droppable droppableId={board.id} type="cards">
-            {(provided, snapshot) => (
-              <div ref={provided.innerRef} {...provided.droppableProps}>
-                {board.cards.map((card, cardIndex) => (
-                  <Card
-                    key={card.id}
-                    card={card}
-                    cardIndex={cardIndex}
+        <div value="hi">
+          {/* 이 div를 이용해 스크롤 기능 조절했다. */}
+          <Wrapper
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            <form onSubmit={onSaveBoardTitle}>
+              {visible ? (
+                <Title onClick={() => setVisible(false)}>
+                  {board.title}
+                  <DelBtn
+                    src="/images/dots.svg"
                     boardIndex={boardIndex}
+                    onClick={onDelete}
                   />
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-          <AddCardContainer boardId={board.id} />
-          {/* 수정해야한다. components가 container를 부르면 안된다. */}
-        </Wrapper>
+                </Title>
+              ) : (
+                <>
+                  <Overlay onClick={onSaveBoardTitle} />
+                  <TitleInput
+                    ref={inputRef}
+                    defaultValue={board.title}
+                    autoFocus
+                  />
+                </>
+              )}
+            </form>
+            <Droppable droppableId={board.id} type="cards">
+              {(provided, snapshot) => (
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  {board.cards.map((card, cardIndex) => (
+                    <Card
+                      key={card.id}
+                      card={card}
+                      cardIndex={cardIndex}
+                      boardIndex={boardIndex}
+                    />
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+            <AddCardContainer boardId={board.id} />
+            {/* 수정해야한다. components가 container를 부르면 안된다. */}
+          </Wrapper>
+        </div>
       )}
     </Draggable>
   );
@@ -84,11 +95,24 @@ export default Board;
 
 const Wrapper = styled.div`
   width: 272px;
+  /* min-width: 272px; */
+  flex-shrink: 0;
   margin: 5px;
   background-color: #ebecef;
   border-radius: 5px;
   padding: 10px 5px 10px 5px;
-  height: 100%;
+  /* height: 100%; */
+  max-height: 85vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 5px;
+    background: lightgray;
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 10%;
+    background: #919295;
+  }
 `;
 
 const TitleInput = styled.input`

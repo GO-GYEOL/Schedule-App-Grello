@@ -6,19 +6,22 @@ import ChangeBackground from "./ChangeBackground";
 
 const HeaderContainer = ({ userData }) => {
   return (
-    <>
+    <Wrapper>
       <Header userData={userData} />
-      <Wrapper>
+      <SmallWrapper>
         <AddBoardContainer />
         <ChangeBackground />
-      </Wrapper>
-    </>
+      </SmallWrapper>
+    </Wrapper>
   );
 };
 
 export default HeaderContainer;
 
 const Wrapper = styled.div`
+  width: 100%;
+`;
+const SmallWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;

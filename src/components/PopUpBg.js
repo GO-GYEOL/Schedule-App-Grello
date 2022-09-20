@@ -15,44 +15,42 @@ const PopUpBg = ({ onBgChange }) => {
   };
 
   return (
-    <div>
-      <Wrapper>
-        <div style={{ display: "flex" }}>
-          <ButtonWrapper onClick={onPhotoVisible}>
-            <ClickImg src="https://images.wallpaperscraft.com/image/single/house_building_architecture_369556_1280x720.jpg" />
-            <div>photos</div>
-          </ButtonWrapper>
-          <ButtonWrapper onClick={onColorVisible}>
-            <ClickImg src="/images/colors.jpg" />
-            <div>color</div>
-          </ButtonWrapper>
-        </div>
+    <Wrapper>
+      <div style={{ display: "flex" }}>
+        <ButtonWrapper onClick={onPhotoVisible}>
+          <ClickImg src="https://images.wallpaperscraft.com/image/single/house_building_architecture_369556_1280x720.jpg" />
+          <div>photos</div>
+        </ButtonWrapper>
+        <ButtonWrapper onClick={onColorVisible}>
+          <ClickImg src="/images/colors.jpg" />
+          <div>color</div>
+        </ButtonWrapper>
+      </div>
 
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {photoVisible
-            ? backgroundImages.map((image) => (
-                <CoverImage
-                  key={image}
-                  url={image}
-                  onClick={() => onBgChange({ url: image })}
-                ></CoverImage>
-              ))
-            : null}
-        </div>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        {photoVisible
+          ? backgroundImages.map((image) => (
+              <CoverImage
+                key={image}
+                url={image}
+                onClick={() => onBgChange({ url: image })}
+              ></CoverImage>
+            ))
+          : null}
+      </div>
 
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {colorVisible
-            ? colors.map((color) => (
-                <ColorButton
-                  key={color.rgb}
-                  rgb={color.rgb}
-                  onClick={() => onBgChange({ color: color.rgb })}
-                ></ColorButton>
-              ))
-            : null}
-        </div>
-      </Wrapper>
-    </div>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        {colorVisible
+          ? colors.map((color) => (
+              <ColorButton
+                key={color.rgb}
+                rgb={color.rgb}
+                onClick={() => onBgChange({ color: color.rgb })}
+              ></ColorButton>
+            ))
+          : null}
+      </div>
+    </Wrapper>
   );
 };
 
