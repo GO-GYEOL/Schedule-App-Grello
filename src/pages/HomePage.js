@@ -33,7 +33,7 @@ const HomePage = (props) => {
     setPosts(store.getState().postsReducer.posts.data, roomId);
     // console.log(store.getState().postsReducer.posts.data);
   });
-  // room 만들 때 데이터에 roomId를 추가해놓고, api를 통해 파베로부터 데이터를 가져올 때, roomId값도 함께 가져온다. 그 id에 subscribe를 하면 된다. 오 굿. 최선인가.
+
 
   if (!postsData)
     return (
