@@ -13,16 +13,13 @@ const HomePage = (props) => {
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const { roomId } = useParams();
-  // 로그인 없이 접근 시 로그인페이지로 강제이동
-  // const isLoggedIn = useSelector((state) => state.userReducer);
-  // const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!isLoggedIn.uid) {
-  //     console.log(isLoggedIn);
-  //     navigate("/");
-  //   }
-  // }, []);
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!userData.uid) {
+      navigate("/");
+    }
+  }, [userData]);
+  
   useEffect(() => {
     dispatch(getPostsFn(roomId));
   }, []);
@@ -33,7 +30,6 @@ const HomePage = (props) => {
     setPosts(store.getState().postsReducer.posts.data, roomId);
     // console.log(store.getState().postsReducer.posts.data);
   });
-
 
   if (!postsData)
     return (
@@ -46,7 +42,7 @@ const HomePage = (props) => {
       bgc={postsData ? postsData.backgroundColor : null}
       url={postsData ? postsData.backgroundUrl : null}
     >
-      <div style={{height:"100%"}}>
+      <div style={{ height: "100%" }}>
         <HeaderContainer userData={userData} />
         <BoardsContainer postsData={postsData} dispatch={dispatch} />
         <Outlet />

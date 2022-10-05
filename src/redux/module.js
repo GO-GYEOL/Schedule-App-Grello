@@ -19,7 +19,8 @@ export const SAVE_COVER_COLOR = "SAVE_COVER_COLOR";
 export const SAVE_BACKGROUND = "SAVE_BACKGROUND";
 export const DELETE_BOARD = "DELETE_BOARD";
 export const DELETE_CARD = "DELETE_CARD";
-export const DELETE_COMMENT= "DELETE_COMMENT";
+export const DELETE_COMMENT = "DELETE_COMMENT";
+export const DELETE_USER = "DELETE_USER";
 
 const initialState = {
   // posts: { loading: false, data: null, error: null },
@@ -239,7 +240,10 @@ export const postsReducer = (state = initialState, action) => {
     case DELETE_COMMENT: {
       const data = state.posts.data;
       const { boardIndex, cardIndex, commentIndex } = action.payload;
-      data.AllBoard[boardIndex].cards[cardIndex].comments.splice(commentIndex, 1);
+      data.AllBoard[boardIndex].cards[cardIndex].comments.splice(
+        commentIndex,
+        1
+      );
       return {
         ...state,
         posts: {
@@ -285,5 +289,8 @@ export const userReducer = (state = initialUserState, action) => {
     default:
       // console.log("default");
       return state;
+    case DELETE_USER:
+      console.log("logout!");
+      return initialUserState;
   }
 };
