@@ -22,11 +22,11 @@ export const unsub = onSnapshot(doc(db, "0828", "room"), (doc) => {
 });
 
 // 데이터 저장하기
-export const setPosts = async (state, roomId) => {
+export const setPosts = (state, roomId) => {
   roomId &&
-    (await setDoc(doc(db, roomId, "room"), {
+    setDoc(doc(db, roomId, "room"), {
       ...state,
-    }));
+    });
 };
 
 // 로그인하기 API

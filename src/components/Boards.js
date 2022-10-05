@@ -62,7 +62,6 @@ const SmallWrapper = styled.div`
 
 const ScrollBox = styled.div`
   display: flex;
-  background-color: pink;
   width: 100%;
   height: 100%;
   overflow-x: scroll;

@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 const LoginContainer = (props) => {
   const dispatch = useDispatch();
-  const onLogin = async (providerName) => {
+  const onLogin = (providerName) => {
     dispatch(getLoginFn(providerName));
   };
   return <LogIn onLogin={onLogin} />;
