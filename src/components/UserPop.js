@@ -20,10 +20,14 @@ export default UserPop;
 const PopUp = styled.div`
   position: absolute;
   right: 0px;
-  padding: 5px;
-  background-color: white;
+  top:40px;
 `;
 const Button = styled.button`
   width: 100px;
-  padding: 5px 15px 5px 15px;
+  padding: 7px 10px 7px 10px;
+  border-radius:5px;
+  background-color:#F0F0F0;
+  &:hover{
+    background-color:#e0e7ec
+  }
 `;

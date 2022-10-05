@@ -36,6 +36,9 @@ const UserPhoto = styled.img`
   width: 30px;
   height: 30px;
   border-radius: 20px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 `;
 
 const Title = styled.div`

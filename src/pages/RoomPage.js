@@ -44,6 +44,7 @@ const RoomPage = (props) => {
         )}
         <form onSubmit={onSubmit}>
           <Input placeholder="보드 번호를 입력하세요" ref={inputRef}></Input>
+          <Button onClick={onSubmit}>입장</Button>
         </form>
       </PopUp>
       <Background />
@@ -73,7 +74,6 @@ const Background = styled.div`
 `;
 const PopUp = styled.div`
   width: 300px;
-  height: 400px;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
 `;
@@ -105,8 +105,13 @@ const Button = styled.div`
   padding: 5px 15px 5px 15px;
   cursor: pointer;
   margin-top:5px;
+  margin-bottom:30px;
+  &:hover {
+    background-color: #ff7702;
+  }
 `;
 const Input = styled.input`
   padding: 5px;
   text-align: center;
+  margin-right:10px;
 `;
